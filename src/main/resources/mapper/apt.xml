@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.happyhouse.model.mapper.HouseMapMapper">
+
+	<select id="getSido" resultType="sidoGugunCodeDto">
+		select left(sidoCode,2) sidoCode, sidoName
+		from sidocode
+		order by sidoCode
+	</select>
+	
+	<select id="getGugunInSido" parameterType="string" resultType="sidoGugunCodeDto">
+		select left(gugunCode,5) gugunCode, gugunName
+		from guguncode
+		where left(gugunCode,2) = #{sido}
+		order by gugunName
+	</select>
+	
+	<select id="getDongInGugun" parameterType="string" resultType="houseInfoDto">
+		select distinct dongName, dongCode
+		from houseinfo	
+		where left(dongCode, 5) = #{gugun}
+		order by dongName
+	</select>
+	
+	<select id="getAptInDong" parameterType="string" resultType="houseInfoDto">
+		select i.aptName aptName, i.dongCode dongCode, i.dongName dongName, i.lat lat, i.lng lng, d.floor floor
+		, i.buildYear buildYear, i.jibun jibun, d.dealAmount recentPrice, d.area area, round(d.area/3.3057) acreage
+		from housedeal d inner join houseinfo i
+		on d.aptCode = i.aptCode
+		and d.no = (select max(no) from housedeal where aptCode = d.aptCode)
+		where dongCode = #{dong}
+		order by aptName;
+	</select>
+	
+	<select id="getHangjung" parameterType="String" resultType="String">
+		select hangjungCode
+		from hangjungcode
+		where dongCode = #{dong}
+		limit 1
+	</select>
+	
+	<select id="getBike" parameterType="String" resultType="bikeDto">
+		select place, b.gugunname as gugunname, placedetail, lat, lng, maxcount, btype
+		from bike b inner join guguncode g
+		on b.gugunname =  g.gugunname
+		where left(g.guguncode, 5) = #{gugun}
+	</select>
+	
+	<select id="getInspector" parameterType="String" resultType="coronaInspectorDto">
+		select lat, lng, gigwanName, gigwanAddress, info
+		from coronainspector
+		where left(gugunCode,5) = #{gugun}
+	</select>
+</mapper>

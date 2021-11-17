@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.happyhouse.model.mapper.NoticeMapper">
+
+	<insert id="registerArticle" parameterType="NoticeDto">
+		insert into notice (userid, subject, content, regtime)
+		values (#{userId}, #{subject}, #{content}, now())
+		<selectKey resultType="int" keyProperty="articleNo" order="AFTER">
+			select last_insert_id()
+		</selectKey>
+	</insert>
+	
+	<insert id="registerFile" parameterType="NoticeDto">
+		insert into file (articleno, savefolder, originfile, savefile)
+		values
+		<foreach collection="fileInfos" item="fileinfo" separator=" , ">
+			(#{articleNo}, #{fileinfo.saveFolder}, #{fileinfo.originFile}, #{fileinfo.saveFile})
+		</foreach>
+	</insert>
+
+	<resultMap type="NoticeDto" id="articleList">
+		<result column="articleno" property="articleNo"/>
+		<result column="userid" property="userId"/>
+		<result column="username" property="userName"/>
+		<result column="subject" property="subject"/>
+		<result column="content" property="content"/>
+		<result column="regtime" property="regTime"/>
+		<collection property="fileInfos" column="articleno=articleno" javaType="list" ofType="FileInfoDto" select="fileInfoList"/>
+	</resultMap>
+
+	<sql id="search">
+		<if test="word != null and word != ''">
+			<if test="key == subject">
+				and subject like concat('%', #{word}, '%')
+			</if>
+			<if test="key != subject">
+				and ${key} = #{word}
+			</if>
+		</if>
+	</sql>
+
+	<select id="listArticle" parameterType="map" resultMap="articleList">
+		select n.articleno, n.userid, n.subject, n.content, n.regtime, u.name
+		from notice n, user u
+		where n.userid = u.userid
+		<include refid="search"></include>
+		order by n.articleno desc
+		limit #{start}, #{spp}
+	</select>
+	
+	<select id="fileInfoList" resultType="FileInfoDto">
+		select savefolder, originfile, savefile
+		from file
+		where articleno = #{articleno}
+	</select>
+	
+	<select id="getTotalCount" parameterType="map" resultType="int">
+		select count(articleno)
+		from notice
+		<where>
+			<include refid="search"></include>
+		</where>
+	</select>
+	
+	<select id="getArticle" parameterType="int" resultType="NoticeDto">
+		select articleno, subject, content
+		from notice
+		where articleno = #{articleNo}
+	</select>
+	
+	<update id="updateArticle" parameterType="NoticeDto">
+		update notice
+		set subject = #{subject}, content = #{content}
+		where articleno = #{articleNo}
+	</update>
+	
+	<delete id="deleteFile" parameterType="int">
+		delete from file
+		where articleno = #{articleNo}
+	</delete>
+	
+	<delete id="deleteArticle" parameterType="int">
+		delete from notice
+		where articleno = #{articleNo}
+	</delete>
+
+</mapper>
