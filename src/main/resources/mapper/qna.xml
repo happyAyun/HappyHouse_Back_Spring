@@ -60,7 +60,7 @@
 	</update>
 	
 	<delete id="deleteMemo" parameterType="int">
-		delete from memo
+		delete from qnareply
 		where articleno = #{articleno}
 	</delete>
 	
