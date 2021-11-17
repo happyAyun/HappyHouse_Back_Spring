@@ -36,10 +36,10 @@ public class ReplyController {
 	@Autowired
 	private ReplyService replyService;
 
-	@ApiOperation(value = "댓글작성", notes = "새로운 댓글 정보를 입력한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@ApiOperation(value = "답변작성", notes = "새로운 답변 정보를 입력한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@PostMapping
 	public ResponseEntity<String> writeArticle(
-			@RequestBody @ApiParam(value = "댓글 정보.", required = true) ReplyDto replyDto) throws Exception {
+			@RequestBody @ApiParam(value = "답변 정보.", required = true) ReplyDto replyDto) throws Exception {
 		logger.info("writeArticle - 호출");
 		if (replyService.writeArticle(replyDto)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
@@ -47,7 +47,7 @@ public class ReplyController {
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
 
-	@ApiOperation(value = "게시판 글목록", notes = "모든 게시글의 정보를 반환한다.", response = List.class)
+	@ApiOperation(value = "해당 게시글 답변목록", notes = "선택된 게시글의 답변정보를 반환한다.", response = List.class)
 	@GetMapping("/{articleno}")
 	public ResponseEntity<List<ReplyDto>> listArticle(
 			@PathVariable("articleno") @ApiParam(value = "게시글을 얻기위한 부가정보.", required = true) int articleno)
@@ -56,7 +56,7 @@ public class ReplyController {
 		return new ResponseEntity<List<ReplyDto>>(replyService.listReply(articleno), HttpStatus.OK);
 	}
 
-	@ApiOperation(value = "게시판 글수정", notes = "새로운 게시글 정보를 입력한다. 그리고 DB수정 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@ApiOperation(value = "답변 글수정", notes = "답변글 정보를 수정한다.", response = String.class)
 	@PutMapping
 	public ResponseEntity<String> modifyArticle(
 			@RequestBody @ApiParam(value = "수정할 글정보.", required = true) ReplyDto replyDto) throws Exception {
@@ -68,7 +68,7 @@ public class ReplyController {
 		return new ResponseEntity<String>(FAIL, HttpStatus.OK);
 	}
 
-	@ApiOperation(value = "게시판 글삭제", notes = "글번호에 해당하는 게시글의 정보를 삭제한다. 그리고 DB삭제 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@ApiOperation(value = "답변 글삭제", notes = "답변번호에 해당하는 답변의 정보를 삭제한다. 그리고 DB삭제 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deleteArticle(
 			@PathVariable("id") @ApiParam(value = "살제할 글의 글번호.", required = true) int id) throws Exception {
