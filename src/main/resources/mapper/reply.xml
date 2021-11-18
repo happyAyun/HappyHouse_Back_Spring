@@ -5,12 +5,12 @@
 <mapper namespace="com.ssafy.happyhouse.model.mapper.ReplyMapper">
 
 	<insert id="writeArticle" parameterType="replyDto">
-		insert into qnareply (articleno, userid, subject, content, regtime)
-		values (#{articleno}, #{userid}, #{subject}, #{content}, now())
+		insert into qnareply (articleno, userid, content, regtime)
+		values (#{articleno}, #{userid}, #{content}, now())
 	</insert>
 	
 	<select id="listReply" parameterType="int" resultType="ReplyDto">
-		select id, articleno, userid, subject, content, regtime
+		select id, articleno, userid, content, regtime
 		from qnareply
 		where articleno = #{articleno}
 		order by id desc
@@ -19,7 +19,7 @@
 	
 	<update id="modifyArticle" parameterType="replyDto">
 		update qnareply
-		set subject = #{subject}, content = #{content}
+		set content = #{content}
 		where id = #{id}
 	</update>
 	

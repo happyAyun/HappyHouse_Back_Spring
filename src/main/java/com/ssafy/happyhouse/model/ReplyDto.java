@@ -9,14 +9,8 @@ public class ReplyDto {
 	private int id;
 	@ApiModelProperty(value = "글번호")
 	private int articleno;
-	@ApiModelProperty(value = "작성자 아이디")
-	private String userid;
-	@ApiModelProperty(value = "글제목")
-	private String subject;
 	@ApiModelProperty(value = "글내용")
 	private String content;
-	@ApiModelProperty(value = "조회수")
-	private int hit;
 	@ApiModelProperty(value = "작성일")
 	private String regtime;
 
@@ -36,36 +30,12 @@ public class ReplyDto {
 		this.articleno = articleno;
 	}
 
-	public String getUserid() {
-		return userid;
-	}
-
-	public void setUserid(String userid) {
-		this.userid = userid;
-	}
-
-	public String getSubject() {
-		return subject;
-	}
-
-	public void setSubject(String subject) {
-		this.subject = subject;
-	}
-
 	public String getContent() {
 		return content;
 	}
 
 	public void setContent(String content) {
 		this.content = content;
-	}
-
-	public int getHit() {
-		return hit;
-	}
-
-	public void setHit(int hit) {
-		this.hit = hit;
 	}
 
 	public String getRegtime() {

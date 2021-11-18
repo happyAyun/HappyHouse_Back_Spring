@@ -7,6 +7,7 @@ import com.ssafy.happyhouse.model.QnaParameterDto;
 import com.ssafy.util.PageNavigation;
 
 public interface QnaService {
+
 	public boolean writeArticle(QnaDto qnaDto) throws Exception;
 
 	public List<QnaDto> listArticle(QnaParameterDto qnaParameterDto) throws Exception;

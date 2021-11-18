@@ -5,8 +5,8 @@
 <mapper namespace="com.ssafy.happyhouse.model.mapper.NoticeMapper">
 
 	<insert id="registerArticle" parameterType="NoticeDto">
-		insert into notice (userid, subject, content, regtime)
-		values (#{userId}, #{subject}, #{content}, now())
+		insert into notice (userid, subject, content, regtime, count)
+		values (#{userId}, #{subject}, #{content}, now(), 0)
 		<selectKey resultType="int" keyProperty="articleNo" order="AFTER">
 			select last_insert_id()
 		</selectKey>
@@ -42,7 +42,11 @@
 	</sql>
 
 	<select id="listArticle" parameterType="map" resultMap="articleList">
-		select n.articleno, n.userid, n.subject, n.content, n.regtime, u.name
+		select n.articleno, n.userid, n.subject, n.content, u.name, n.regtime
+			case when date_format(n.regtime, '%Y%m%d') = date_format(now(), '%Y%m%d')
+			then date_format(regtime, '%H:%i:%s')
+			else date_format(regtime, '%y.%m.%d')
+			end n.regtime
 		from notice n, user u
 		where n.userid = u.userid
 		<include refid="search"></include>
@@ -65,10 +69,16 @@
 	</select>
 	
 	<select id="getArticle" parameterType="int" resultType="NoticeDto">
-		select articleno, subject, content
+		select articleno, subject, content, regtime, count
 		from notice
 		where articleno = #{articleNo}
 	</select>
+	
+	<update id="updateCount" parameterType="int">
+		update notice
+		set count = count +1
+		where articleno = #{articleNo}
+	</update>
 	
 	<update id="updateArticle" parameterType="NoticeDto">
 		update notice

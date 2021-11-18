@@ -17,6 +17,16 @@ public class QnaDto {
 	private int hit;
 	@ApiModelProperty(value = "작성일")
 	private String regtime;
+	@ApiModelProperty(value = "답글")
+	private ReplyDto reply;
+
+	public ReplyDto getReply() {
+		return reply;
+	}
+
+	public void setReply(ReplyDto reply) {
+		this.reply = reply;
+	}
 
 	public int getArticleno() {
 		return articleno;
