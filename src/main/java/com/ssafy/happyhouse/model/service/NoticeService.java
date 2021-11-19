@@ -1,23 +1,25 @@
 package com.ssafy.happyhouse.model.service;
 
 import java.util.List;
-import java.util.Map;
 
 import com.ssafy.happyhouse.model.NoticeDto;
+import com.ssafy.happyhouse.model.NoticeParameterDto;
 import com.ssafy.util.PageNavigation;
 
 public interface NoticeService {
 
-	void registerArticle(NoticeDto noticeDto) throws Exception;
+	public boolean writeArticle(NoticeDto noticeDto) throws Exception;
 
-	List<NoticeDto> listArticle(Map<String, String> map) throws Exception;
+	public List<NoticeDto> listArticle(NoticeParameterDto noticeParameterDto) throws Exception;
 
-	PageNavigation makePageNavigation(Map<String, String> map) throws Exception;
+	public PageNavigation makePageNavigation(NoticeParameterDto noticeParameterDto) throws Exception;
 
-	NoticeDto getArticle(int articleNo) throws Exception;
+	public NoticeDto getArticle(int articleno) throws Exception;
 
-	void updateArticle(NoticeDto noticeDto) throws Exception;
+	public void updateHit(int articleno) throws Exception;
 
-	void deleteArticle(int articleNo) throws Exception;
+	public boolean modifyArticle(NoticeDto noticeDto) throws Exception;
+
+	public boolean deleteArticle(int articleno) throws Exception;
 
 }

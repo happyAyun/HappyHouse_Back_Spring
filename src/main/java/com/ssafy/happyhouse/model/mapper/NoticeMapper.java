@@ -1,23 +1,26 @@
 package com.ssafy.happyhouse.model.mapper;
 
+import java.sql.SQLException;
 import java.util.List;
-import java.util.Map;
 
 import com.ssafy.happyhouse.model.NoticeDto;
+import com.ssafy.happyhouse.model.NoticeParameterDto;
 
 public interface NoticeMapper {
 
-	void registerArticle(NoticeDto noticeDto) throws Exception;
+	public int writeArticle(NoticeDto noticeDto) throws SQLException;
 
-	void registerFile(NoticeDto noticeDto) throws Exception;
+	public List<NoticeDto> listArticle(NoticeParameterDto noticeParameterDto) throws SQLException;
 
-	List<NoticeDto> listArticle(Map<String, Object> param) throws Exception;
+	public int getTotalCount(NoticeParameterDto noticeParameterDto) throws SQLException;
 
-	NoticeDto getArticle(int articleNo) throws Exception;
+	public NoticeDto getArticle(int articleno) throws SQLException;
 
-	void updateArticle(NoticeDto noticeDto) throws Exception;
+	public void updateHit(int articleno) throws SQLException;
 
-	void deleteArticle(int articleNo) throws Exception;
+	public int modifyArticle(NoticeDto noticeDto) throws SQLException;
 
-	int getTotalCount(Map<String, String> map) throws Exception;
+	public void deleteMemo(int articleno) throws SQLException;
+
+	public int deleteArticle(int articleno) throws SQLException;
 }

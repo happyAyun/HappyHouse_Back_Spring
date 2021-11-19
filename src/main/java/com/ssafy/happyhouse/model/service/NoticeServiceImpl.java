@@ -1,16 +1,14 @@
 package com.ssafy.happyhouse.model.service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ssafy.happyhouse.model.FileInfoDto;
 import com.ssafy.happyhouse.model.NoticeDto;
+import com.ssafy.happyhouse.model.NoticeParameterDto;
 import com.ssafy.happyhouse.model.mapper.NoticeMapper;
 import com.ssafy.util.PageNavigation;
 
@@ -21,73 +19,60 @@ public class NoticeServiceImpl implements NoticeService {
 	private SqlSession sqlSession;
 
 	@Override
-	@Transactional
-	public void registerArticle(NoticeDto noticeDto) throws Exception {
-		NoticeMapper noticeMapper = sqlSession.getMapper(NoticeMapper.class);
-		noticeMapper.registerArticle(noticeDto);
-		List<FileInfoDto> fileInfos = noticeDto.getFileInfos();
-		if (fileInfos != null && !fileInfos.isEmpty()) {
-			noticeMapper.registerFile(noticeDto);
+	public boolean writeArticle(NoticeDto noticeDto) throws Exception {
+		if (noticeDto.getSubject() == null || noticeDto.getContent() == null) {
+			throw new Exception();
 		}
+		return sqlSession.getMapper(NoticeMapper.class).writeArticle(noticeDto) == 1;
 	}
 
 	@Override
-	public List<NoticeDto> listArticle(Map<String, String> map) throws Exception {
-		Map<String, Object> param = new HashMap<String, Object>();
-		String key = map.get("key");
-		if ("userid".equals(key))
-			key = "n.userid";
-		param.put("key", key == null ? "" : key);
-		param.put("word", map.get("word") == null ? "" : map.get("word"));
-		int currentPage = Integer.parseInt(map.get("pg") == null ? "1" : map.get("pg"));
-		int sizePerPage = Integer.parseInt(map.get("spp"));
-		int start = (currentPage - 1) * sizePerPage;
-		param.put("start", start);
-		//
-//		int articleNum = sqlSession.getMapper(NoticeMapper.class).getTotalCount(map);
-//		if (sizePerPage > articleNum)
-//			sizePerPage = articleNum;
-		param.put("spp", sizePerPage);
-		return sqlSession.getMapper(NoticeMapper.class).listArticle(param);
+	public List<NoticeDto> listArticle(NoticeParameterDto noticeParameterDto) throws Exception {
+		int start = noticeParameterDto.getPg() == 0 ? 0
+				: (noticeParameterDto.getPg() - 1) * noticeParameterDto.getSpp();
+		noticeParameterDto.setStart(start);
+		return sqlSession.getMapper(NoticeMapper.class).listArticle(noticeParameterDto);
 	}
 
 	@Override
-	public PageNavigation makePageNavigation(Map<String, String> map) throws Exception {
+	public PageNavigation makePageNavigation(NoticeParameterDto noticeParameterDto) throws Exception {
+		int naviSize = 5;
 		PageNavigation pageNavigation = new PageNavigation();
-
-		int naviSize = 10;
-		int currentPage = Integer.parseInt(map.get("pg"));
-		System.out.println(currentPage);
-		int sizePerPage = Integer.parseInt(map.get("spp"));
-
-		pageNavigation.setCurrentPage(currentPage);
+		pageNavigation.setCurrentPage(noticeParameterDto.getPg());
 		pageNavigation.setNaviSize(naviSize);
-		int totalCount = sqlSession.getMapper(NoticeMapper.class).getTotalCount(map);
+		int totalCount = sqlSession.getMapper(NoticeMapper.class).getTotalCount(noticeParameterDto);// 총글갯수 269
 		pageNavigation.setTotalCount(totalCount);
-		int totalPageCount = (totalCount - 1) / sizePerPage + 1;
+		int totalPageCount = (totalCount - 1) / noticeParameterDto.getSpp() + 1;// 27
 		pageNavigation.setTotalPageCount(totalPageCount);
-		boolean startRange = currentPage <= naviSize;
+		boolean startRange = noticeParameterDto.getPg() <= naviSize;
 		pageNavigation.setStartRange(startRange);
-		boolean endRange = (totalPageCount - 1) / naviSize * naviSize < currentPage;
+		boolean endRange = (totalPageCount - 1) / naviSize * naviSize < noticeParameterDto.getPg();
 		pageNavigation.setEndRange(endRange);
 		pageNavigation.makeNavigator();
-
 		return pageNavigation;
 	}
 
 	@Override
-	public NoticeDto getArticle(int articleNo) throws Exception {
-		return sqlSession.getMapper(NoticeMapper.class).getArticle(articleNo);
+	public NoticeDto getArticle(int articleno) throws Exception {
+		return sqlSession.getMapper(NoticeMapper.class).getArticle(articleno);
 	}
 
 	@Override
-	public void updateArticle(NoticeDto noticeDto) throws Exception {
-		sqlSession.getMapper(NoticeMapper.class).updateArticle(noticeDto);
+	public void updateHit(int articleno) throws Exception {
+		sqlSession.getMapper(NoticeMapper.class).updateHit(articleno);
 	}
 
 	@Override
-	public void deleteArticle(int articleNo) throws Exception {
-		sqlSession.getMapper(NoticeMapper.class).deleteArticle(articleNo);
+	@Transactional
+	public boolean modifyArticle(NoticeDto noticeDto) throws Exception {
+		return sqlSession.getMapper(NoticeMapper.class).modifyArticle(noticeDto) == 1;
+	}
+
+	@Override
+	@Transactional
+	public boolean deleteArticle(int articleno) throws Exception {
+		sqlSession.getMapper(NoticeMapper.class).deleteMemo(articleno);
+		return sqlSession.getMapper(NoticeMapper.class).deleteArticle(articleno) == 1;
 	}
 
 }
