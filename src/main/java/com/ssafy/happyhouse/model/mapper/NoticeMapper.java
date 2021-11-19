@@ -20,7 +20,5 @@ public interface NoticeMapper {
 
 	public int modifyArticle(NoticeDto noticeDto) throws SQLException;
 
-	public void deleteMemo(int articleno) throws SQLException;
-
 	public int deleteArticle(int articleno) throws SQLException;
 }

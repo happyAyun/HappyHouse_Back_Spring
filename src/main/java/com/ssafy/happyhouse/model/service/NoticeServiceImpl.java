@@ -71,7 +71,6 @@ public class NoticeServiceImpl implements NoticeService {
 	@Override
 	@Transactional
 	public boolean deleteArticle(int articleno) throws Exception {
-		sqlSession.getMapper(NoticeMapper.class).deleteMemo(articleno);
 		return sqlSession.getMapper(NoticeMapper.class).deleteArticle(articleno) == 1;
 	}
 
