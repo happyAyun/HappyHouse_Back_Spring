@@ -13,6 +13,16 @@ public class ReplyDto {
 	private String content;
 	@ApiModelProperty(value = "작성일")
 	private String regtime;
+	@ApiModelProperty(value = "유저 아이디")
+	private String userid;
+
+	public String getUserid() {
+		return userid;
+	}
+
+	public void setUserid(String userid) {
+		this.userid = userid;
+	}
 
 	public int getId() {
 		return id;

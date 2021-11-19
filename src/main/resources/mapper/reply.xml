@@ -9,7 +9,7 @@
 		values (#{articleno}, #{userid}, #{content}, now())
 	</insert>
 	
-	<select id="listReply" parameterType="int" resultType="ReplyDto">
+	<select id="listReply" parameterType="int" resultType="replyDto">
 		select id, articleno, userid, content, regtime
 		from qnareply
 		where articleno = #{articleno}
