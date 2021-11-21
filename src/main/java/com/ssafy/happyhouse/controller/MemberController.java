@@ -11,9 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -97,4 +99,24 @@ public class MemberController {
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 
+	@PutMapping
+	public ResponseEntity<String> modifyArticle(
+			@RequestBody @ApiParam(value = "수정할 회원정보.", required = true) MemberDto memberDto) throws Exception {
+		logger.info("modify- 호출");
+
+		if (memberService.updateUser(memberDto)) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.OK);
+	}
+
+	@DeleteMapping("/{userid}")
+	public ResponseEntity<String> deleteArticle(
+			@PathVariable("userid") @ApiParam(value = "회원탈퇴", required = true) String userid) throws Exception {
+		logger.info("delete - 호출");
+		if (memberService.deleteUser(userid)) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	}
 }
