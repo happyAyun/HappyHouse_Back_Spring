@@ -43,6 +43,11 @@ public class HappyHouseMapController {
 		return new ResponseEntity<List<HouseInfoDto>>(houseMapService.getAptInDong(dong), HttpStatus.OK);
 	}
 
+	@GetMapping(value = "/past")
+	public ResponseEntity<List<HouseInfoDto>> past(@RequestParam("aptCode") String aptCode) throws Exception {
+		return new ResponseEntity<List<HouseInfoDto>>(houseMapService.getPastAptList(aptCode), HttpStatus.OK);
+	}
+
 	@GetMapping(value = "/hangjung")
 	public ResponseEntity<String> hangjung(@RequestParam("dong") String dong) throws Exception {
 

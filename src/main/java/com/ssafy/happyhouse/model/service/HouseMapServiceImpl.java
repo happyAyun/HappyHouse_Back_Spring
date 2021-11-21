@@ -53,4 +53,9 @@ public class HouseMapServiceImpl implements HouseMapService {
 		return sqlSession.getMapper(HouseMapMapper.class).getInspector(gugun);
 	}
 
+	@Override
+	public List<HouseInfoDto> getPastAptList(String aptCode) {
+		return sqlSession.getMapper(HouseMapMapper.class).getPastAptList(aptCode);
+	}
+
 }

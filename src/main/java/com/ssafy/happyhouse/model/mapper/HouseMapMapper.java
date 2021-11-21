@@ -22,4 +22,6 @@ public interface HouseMapMapper {
 	List<BikeDto> getBike(String gugun) throws Exception;
 
 	List<CoronaInspectorDto> getInspector(String gugun) throws Exception;
+
+	List<HouseInfoDto> getPastAptList(String aptCode);
 }

@@ -14,6 +14,51 @@ public class HouseInfoDto {
 	private String img;
 	private String recentPrice;
 	private String floor;
+	private String area;
+	private String acreage;
+	private String dealYear;
+	private String dealMonth;
+	private String dealDay;
+
+	public String getDealYear() {
+		return dealYear;
+	}
+
+	public void setDealYear(String dealYear) {
+		this.dealYear = dealYear;
+	}
+
+	public String getDealMonth() {
+		return dealMonth;
+	}
+
+	public void setDealMonth(String dealMonth) {
+		this.dealMonth = dealMonth;
+	}
+
+	public String getDealDay() {
+		return dealDay;
+	}
+
+	public void setDealDay(String dealDay) {
+		this.dealDay = dealDay;
+	}
+
+	public String getAcreage() {
+		return acreage;
+	}
+
+	public void setAcreage(String acreage) {
+		this.acreage = acreage;
+	}
+
+	public String getArea() {
+		return area;
+	}
+
+	public void setArea(String area) {
+		this.area = area;
+	}
 
 	public String getFloor() {
 		return floor;
