@@ -11,4 +11,9 @@ public interface MemberService {
 	public boolean updateUser(MemberDto memberDto) throws Exception;
 
 	public boolean deleteUser(String userid) throws Exception;
+
+	public boolean joinUser(MemberDto memberDto) throws Exception;
+
+	public boolean checkId(String userid) throws Exception;
+
 }

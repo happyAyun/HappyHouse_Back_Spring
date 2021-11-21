@@ -100,7 +100,7 @@ public class MemberController {
 	}
 
 	@PutMapping
-	public ResponseEntity<String> modifyArticle(
+	public ResponseEntity<String> modifyUser(
 			@RequestBody @ApiParam(value = "수정할 회원정보.", required = true) MemberDto memberDto) throws Exception {
 		logger.info("modify- 호출");
 
@@ -111,10 +111,30 @@ public class MemberController {
 	}
 
 	@DeleteMapping("/{userid}")
-	public ResponseEntity<String> deleteArticle(
+	public ResponseEntity<String> deleteUser(
 			@PathVariable("userid") @ApiParam(value = "회원탈퇴", required = true) String userid) throws Exception {
 		logger.info("delete - 호출");
 		if (memberService.deleteUser(userid)) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	}
+
+	@PostMapping
+	public ResponseEntity<String> joinUser(
+			@RequestBody @ApiParam(value = "회원 정보.", required = true) MemberDto memberDto) throws Exception {
+		logger.info("joinUser - 호출");
+		if (memberService.joinUser(memberDto)) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	}
+
+	@GetMapping("/{userid}")
+	public ResponseEntity<String> checkId(
+			@PathVariable("userid") @ApiParam(value = "중복 아이디 체크", required = true) String userid) throws Exception {
+		logger.info("checkId - 호출");
+		if (memberService.checkId(userid)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);

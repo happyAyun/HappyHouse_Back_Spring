@@ -16,4 +16,8 @@ public interface MemberMapper {
 	public int deleteUser(String userid) throws SQLException;
 
 	public int updateUser(MemberDto memberDto) throws SQLException;
+
+	public int joinUser(MemberDto memberDto) throws SQLException;
+
+	public int checkId(String userid) throws SQLException;
 }

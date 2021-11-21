@@ -35,4 +35,14 @@ public class MemberServiceImpl implements MemberService {
 		return sqlSession.getMapper(MemberMapper.class).deleteUser(userid) == 1;
 	}
 
+	@Override
+	public boolean joinUser(MemberDto memberDto) throws Exception {
+		return sqlSession.getMapper(MemberMapper.class).joinUser(memberDto) == 1;
+	}
+
+	@Override
+	public boolean checkId(String userid) throws Exception {
+		return sqlSession.getMapper(MemberMapper.class).checkId(userid) == 0;
+	}
+
 }

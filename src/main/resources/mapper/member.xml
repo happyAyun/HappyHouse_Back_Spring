@@ -26,4 +26,13 @@
 		set name = #{username}, email = #{email}
 		where userid = #{userid}
 	</update>
+	
+	<insert id="joinUser" parameterType="memberDto">
+		insert into user (userid, password, name, email, joindate)
+		values (#{userid}, #{userpwd}, #{username}, #{email}, now())
+	</insert>
+	
+	<select id="checkId" parameterType="String" resultType="int">
+		select count(userid) from user where userid = #{userid}
+	</select>
 </mapper>
