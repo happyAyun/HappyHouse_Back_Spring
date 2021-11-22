@@ -41,12 +41,13 @@
 		limit 1
 	</select>
 	
-	<select id="getBike" parameterType="String" resultType="bikeDto">
+	<!-- <select id="getBike" parameterType="String" resultType="bikeDto">
 		select place, b.gugunname as gugunname, placedetail, lat, lng, maxcount, btype
 		from bike b inner join guguncode g
 		on b.gugunname =  g.gugunname
 		where left(g.guguncode, 5) = #{gugun}
-	</select>
+	</select> 
+	혹시 나중에 쓸지도//-->
 	
 	<select id="getInspector" parameterType="String" resultType="coronaInspectorDto">
 		select lat, lng, gigwanName, gigwanAddress, info
@@ -60,5 +61,41 @@
 		from houseinfo i inner join housedeal d
 		on i.aptCode = d.aptCode
 		where i.aptCode = #{aptCode}
+	</select>
+	
+	<select id="getSubway" parameterType="Map" resultType="subwayDto">
+		select * from (
+		select train, station, jibun, lat, lng,
+		( 6371 * acos( cos( radians( #{lat} ) )
+		 * cos( radians( lat) ) * cos( radians( lng ) - radians(#{lng}) )
+		 + sin( radians(#{lat}) )
+		 * sin( radians(lat) ) ) ) AS distance
+		from subway
+		) DATA
+		<![CDATA[where DATA.distance < 0.7]]>	
+	</select>
+	
+	<select id="getBus" parameterType="Map" resultType="busDto">
+		select * from (
+		select ars, station, lat,lng,
+		( 6371 * acos( cos( radians( #{lat} ) )
+		 * cos( radians( lat) ) * cos( radians( lng ) - radians(#{lng}) )
+		 + sin( radians(#{lat}) )
+		 * sin( radians(lat) ) ) ) AS distance
+		from bus
+		) DATA
+		<![CDATA[where DATA.distance < 0.7]]>	
+	</select>
+	
+	<select id="getBike" parameterType="Map" resultType="bikeDto">
+		select * from (
+		select place, placedetail, maxcount, btype, lat, lng,
+		( 6371 * acos( cos( radians( #{lat} ) )
+		 * cos( radians( lat) ) * cos( radians( lng ) - radians(#{lng}) )
+		 + sin( radians(#{lat}) )
+		 * sin( radians(lat) ) ) ) AS distance
+		from bike
+		) DATA
+		<![CDATA[where DATA.distance < 0.7]]>	
 	</select>
 </mapper>

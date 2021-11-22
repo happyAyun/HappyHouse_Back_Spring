@@ -1,15 +1,18 @@
 package com.ssafy.happyhouse.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.happyhouse.model.BikeDto;
+import com.ssafy.happyhouse.model.BusDto;
 import com.ssafy.happyhouse.model.CoronaInspectorDto;
 import com.ssafy.happyhouse.model.HouseInfoDto;
 import com.ssafy.happyhouse.model.SidoGugunCodeDto;
+import com.ssafy.happyhouse.model.SubwayDto;
 import com.ssafy.happyhouse.model.mapper.HouseMapMapper;
 
 @Service
@@ -44,8 +47,8 @@ public class HouseMapServiceImpl implements HouseMapService {
 	}
 
 	@Override
-	public List<BikeDto> getBike(String gugun) throws Exception {
-		return sqlSession.getMapper(HouseMapMapper.class).getBike(gugun);
+	public List<BikeDto> getBike(Map<String, String> latlng) throws Exception {
+		return sqlSession.getMapper(HouseMapMapper.class).getBike(latlng);
 	}
 
 	@Override
@@ -56,6 +59,16 @@ public class HouseMapServiceImpl implements HouseMapService {
 	@Override
 	public List<HouseInfoDto> getPastAptList(String aptCode) {
 		return sqlSession.getMapper(HouseMapMapper.class).getPastAptList(aptCode);
+	}
+
+	@Override
+	public List<BusDto> getBus(Map<String, String> latlng) throws Exception {
+		return sqlSession.getMapper(HouseMapMapper.class).getBus(latlng);
+	}
+
+	@Override
+	public List<SubwayDto> getSubway(Map<String, String> latlng) throws Exception {
+		return sqlSession.getMapper(HouseMapMapper.class).getSubway(latlng);
 	}
 
 }

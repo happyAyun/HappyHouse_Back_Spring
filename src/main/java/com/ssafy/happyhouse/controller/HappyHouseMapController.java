@@ -1,6 +1,7 @@
 package com.ssafy.happyhouse.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,9 +12,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.happyhouse.model.BikeDto;
+import com.ssafy.happyhouse.model.BusDto;
 import com.ssafy.happyhouse.model.CoronaInspectorDto;
 import com.ssafy.happyhouse.model.HouseInfoDto;
 import com.ssafy.happyhouse.model.SidoGugunCodeDto;
+import com.ssafy.happyhouse.model.SubwayDto;
 import com.ssafy.happyhouse.model.service.HouseMapService;
 
 @RestController
@@ -55,8 +58,19 @@ public class HappyHouseMapController {
 	}
 
 	@GetMapping(value = "/bike")
-	public ResponseEntity<List<BikeDto>> bike(@RequestParam("gugun") String gugun) throws Exception {
-		return new ResponseEntity<List<BikeDto>>(houseMapService.getBike(gugun), HttpStatus.OK);
+	public ResponseEntity<List<BikeDto>> bike(@RequestParam Map<String, String> latlng) throws Exception {
+
+		return new ResponseEntity<List<BikeDto>>(houseMapService.getBike(latlng), HttpStatus.OK);
+	}
+
+	@GetMapping(value = "/subway")
+	public ResponseEntity<List<SubwayDto>> subway(@RequestParam Map<String, String> latlng) throws Exception {
+		return new ResponseEntity<List<SubwayDto>>(houseMapService.getSubway(latlng), HttpStatus.OK);
+	}
+
+	@GetMapping(value = "/bus")
+	public ResponseEntity<List<BusDto>> bus(@RequestParam Map<String, String> latlng) throws Exception {
+		return new ResponseEntity<List<BusDto>>(houseMapService.getBus(latlng), HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/inspector")
