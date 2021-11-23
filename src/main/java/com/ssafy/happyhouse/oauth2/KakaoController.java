@@ -155,8 +155,11 @@ public class KakaoController {
 		System.out.println(resultMap.toString());
 		System.out.println(status);
 
-		MemberDto front = new MemberDto(loginUser.getUserid(), loginUser.getUsername(), loginUser.getEmail(),
-				loginUser.getJoindate());
+//		MemberDto front = new MemberDto(loginUser.getUserid(), loginUser.getUsername(), loginUser.getEmail(),
+//				loginUser.getJoindate());
+//		ObjectMapper objecMapper = new ObjectMapper();
+//		String personJson = objecMapper.writeValueAsString(front);
+
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 		// return "회원가입 및 로그인 처리 완료";
 	}
