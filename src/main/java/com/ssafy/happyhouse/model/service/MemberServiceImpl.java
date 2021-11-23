@@ -15,6 +15,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public MemberDto login(MemberDto memberDto) throws Exception {
+		System.out.println(memberDto.getUserid() + " " + memberDto.getUserpwd());
 		if (memberDto.getUserid() == null || memberDto.getUserpwd() == null)
 			return null;
 		return sqlSession.getMapper(MemberMapper.class).login(memberDto);

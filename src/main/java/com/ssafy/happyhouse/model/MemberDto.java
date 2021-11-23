@@ -2,7 +2,13 @@ package com.ssafy.happyhouse.model;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @ApiModel(value = "MemberDto : 회원정보", description = "회원의 상세 정보를 나타낸다.")
 public class MemberDto {
 
@@ -54,6 +60,14 @@ public class MemberDto {
 	}
 
 	public void setJoindate(String joindate) {
+		this.joindate = joindate;
+	}
+
+	public MemberDto(String userid, String username, String email, String joindate) {
+		super();
+		this.userid = userid;
+		this.username = username;
+		this.email = email;
 		this.joindate = joindate;
 	}
 
