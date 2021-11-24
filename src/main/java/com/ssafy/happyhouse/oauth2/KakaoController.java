@@ -160,6 +160,7 @@ public class KakaoController {
 		user.put("username", loginUser.getUsername());
 		user.put("email", loginUser.getEmail());
 		user.put("joindate", loginUser.getJoindate());
+		System.out.println(loginUser.getJoindate());
 		resultMap.put("userInfo", user);
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 		// return "회원가입 및 로그인 처리 완료";
