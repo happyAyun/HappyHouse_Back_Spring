@@ -84,7 +84,7 @@
 		 * sin( radians(lat) ) ) ) AS distance
 		from bus
 		) DATA
-		<![CDATA[where DATA.distance < 0.7]]>	
+		<![CDATA[where DATA.distance < 0.5]]>	
 	</select>
 	
 	<select id="getBike" parameterType="Map" resultType="bikeDto">
@@ -97,5 +97,26 @@
 		from bike
 		) DATA
 		<![CDATA[where DATA.distance < 0.7]]>	
+	</select>
+	
+	<select id="getAptInRadius" parameterType="Map" resultType="houseInfoDto">
+	select * from(
+		select i.aptCode aptCode, i.aptName aptName, i.dongCode dongCode, i.dongName dongName, i.lat lat, i.lng lng, d.floor floor
+		, i.buildYear buildYear, i.jibun jibun, d.dealAmount recentPrice, round(d.area,2) area, round(d.area/3.3057, 2) acreage,
+		( 6371 * acos( cos( radians( #{lat} ) )
+		 * cos( radians( lat) ) * cos( radians( lng ) - radians(#{lng}) )
+		 + sin( radians(#{lat}) )
+		 * sin( radians(lat) ) ) ) AS distance
+		from housedeal d inner join houseinfo i
+		on d.aptCode = i.aptCode
+		and d.no = (select max(no) from housedeal where aptCode = d.aptCode)
+        )DATA
+		<![CDATA[where DATA.distance <= 2]]>	
+		order by aptName
+	</select>
+	
+	<select id="getdSubway" resultType="subwayDto">
+		select train, station, jibun, lat, lng
+		from subway;
 	</select>
 </mapper>

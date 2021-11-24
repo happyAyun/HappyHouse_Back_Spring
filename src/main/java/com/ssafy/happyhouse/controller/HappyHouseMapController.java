@@ -46,6 +46,11 @@ public class HappyHouseMapController {
 		return new ResponseEntity<List<HouseInfoDto>>(houseMapService.getAptInDong(dong), HttpStatus.OK);
 	}
 
+	@GetMapping(value = "/radius")
+	public ResponseEntity<List<HouseInfoDto>> radius(@RequestParam Map<String, String> latlng) throws Exception {
+		return new ResponseEntity<List<HouseInfoDto>>(houseMapService.getAptInRadius(latlng), HttpStatus.OK);
+	}
+
 	@GetMapping(value = "/past")
 	public ResponseEntity<List<HouseInfoDto>> past(@RequestParam("aptCode") String aptCode) throws Exception {
 		return new ResponseEntity<List<HouseInfoDto>>(houseMapService.getPastAptList(aptCode), HttpStatus.OK);
@@ -68,6 +73,11 @@ public class HappyHouseMapController {
 		return new ResponseEntity<List<SubwayDto>>(houseMapService.getSubway(latlng), HttpStatus.OK);
 	}
 
+	@GetMapping(value = "/dsubway")
+	public ResponseEntity<List<SubwayDto>> dSubway() throws Exception {
+		return new ResponseEntity<List<SubwayDto>>(houseMapService.getdSubway(), HttpStatus.OK);
+	}
+
 	@GetMapping(value = "/bus")
 	public ResponseEntity<List<BusDto>> bus(@RequestParam Map<String, String> latlng) throws Exception {
 		return new ResponseEntity<List<BusDto>>(houseMapService.getBus(latlng), HttpStatus.OK);
@@ -77,4 +87,8 @@ public class HappyHouseMapController {
 	public ResponseEntity<List<CoronaInspectorDto>> inspector(@RequestParam("gugun") String gugun) throws Exception {
 		return new ResponseEntity<List<CoronaInspectorDto>>(houseMapService.getInspector(gugun), HttpStatus.OK);
 	}
+//	@GetMapping(value = "/school")
+//	public ResponseEntity<List<CoronaInspectorDto>> inspector(@RequestParam("gugun") String gugun) throws Exception {
+//		return new ResponseEntity<List<CoronaInspectorDto>>(houseMapService.getInspector(gugun), HttpStatus.OK);
+//	}
 }

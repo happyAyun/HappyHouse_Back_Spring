@@ -71,4 +71,14 @@ public class HouseMapServiceImpl implements HouseMapService {
 		return sqlSession.getMapper(HouseMapMapper.class).getSubway(latlng);
 	}
 
+	@Override
+	public List<HouseInfoDto> getAptInRadius(Map<String, String> latlng) {
+		return sqlSession.getMapper(HouseMapMapper.class).getAptInRadius(latlng);
+	}
+
+	@Override
+	public List<SubwayDto> getdSubway() {
+		return sqlSession.getMapper(HouseMapMapper.class).getdSubway();
+	}
+
 }

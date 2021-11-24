@@ -31,4 +31,8 @@ public interface HouseMapMapper {
 	List<BusDto> getBus(Map<String, String> latlng) throws Exception;
 
 	List<SubwayDto> getSubway(Map<String, String> latlng) throws Exception;
+
+	List<HouseInfoDto> getAptInRadius(Map<String, String> latlng);
+
+	List<SubwayDto> getdSubway();
 }

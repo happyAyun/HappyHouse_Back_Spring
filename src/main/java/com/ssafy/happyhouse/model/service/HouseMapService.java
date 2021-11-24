@@ -31,4 +31,8 @@ public interface HouseMapService {
 	List<CoronaInspectorDto> getInspector(String gugun) throws Exception;
 
 	List<HouseInfoDto> getPastAptList(String aptCode);
+
+	List<HouseInfoDto> getAptInRadius(Map<String, String> latlng);
+
+	List<SubwayDto> getdSubway();
 }
