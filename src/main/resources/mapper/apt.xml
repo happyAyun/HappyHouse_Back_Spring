@@ -119,4 +119,18 @@
 		select train, station, jibun, lat, lng
 		from subway;
 	</select>
+	
+	<select id="getSchool" parameterType="Map" resultType="schoolDto">
+		select * from(
+		select *,
+		round(( 6371000 * acos( cos( radians( #{lat} ) )
+		 * cos( radians( lat) ) * cos( radians( lng ) - radians(#{lng}) )
+		 + sin( radians(#{lat}) )
+		 * sin( radians(lat) ) ) ),0) AS distance
+		from school
+        )DATA
+		<![CDATA[where DATA.distance <= 3000]]>
+		order by DATA.distance;
+	
+	</select>
 </mapper>

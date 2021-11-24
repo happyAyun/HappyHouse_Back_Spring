@@ -7,6 +7,7 @@ import com.ssafy.happyhouse.model.BikeDto;
 import com.ssafy.happyhouse.model.BusDto;
 import com.ssafy.happyhouse.model.CoronaInspectorDto;
 import com.ssafy.happyhouse.model.HouseInfoDto;
+import com.ssafy.happyhouse.model.SchoolDto;
 import com.ssafy.happyhouse.model.SidoGugunCodeDto;
 import com.ssafy.happyhouse.model.SubwayDto;
 
@@ -35,4 +36,6 @@ public interface HouseMapService {
 	List<HouseInfoDto> getAptInRadius(Map<String, String> latlng);
 
 	List<SubwayDto> getdSubway();
+
+	List<SchoolDto> getSchool(Map<String, String> latlng);
 }
