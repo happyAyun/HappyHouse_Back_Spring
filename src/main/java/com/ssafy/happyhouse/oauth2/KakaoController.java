@@ -155,11 +155,12 @@ public class KakaoController {
 		System.out.println(resultMap.toString());
 		System.out.println(status);
 
-//		MemberDto front = new MemberDto(loginUser.getUserid(), loginUser.getUsername(), loginUser.getEmail(),
-//				loginUser.getJoindate());
-//		ObjectMapper objecMapper = new ObjectMapper();
-//		String personJson = objecMapper.writeValueAsString(front);
-
+		Map<String, Object> user = new HashMap<>();
+		user.put("userid", loginUser.getUserid());
+		user.put("username", loginUser.getUsername());
+		user.put("email", loginUser.getEmail());
+		user.put("joindate", loginUser.getJoindate());
+		resultMap.put("userInfo", user);
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 		// return "회원가입 및 로그인 처리 완료";
 	}
