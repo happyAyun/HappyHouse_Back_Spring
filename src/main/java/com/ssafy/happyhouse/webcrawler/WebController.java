@@ -35,14 +35,14 @@ public class WebController {
 
 		String text = null;
 		try {
-			text = URLEncoder.encode("아파트", "UTF-8");
+			text = URLEncoder.encode("부동산 매매 매물 시세", "UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			throw new RuntimeException("검색어 인코딩 실패", e);
 		}
 
 		String apiURL = "https://openapi.naver.com/v1/search/news.json?query=" + text; // json 결과
 		// String apiURL = "https://openapi.naver.com/v1/search/blog.xml?query="+ text;
-		// // xml 결과
+		// xml 결과
 
 		Map<String, String> requestHeaders = new HashMap<>();
 		requestHeaders.put("X-Naver-Client-Id", clientId);
