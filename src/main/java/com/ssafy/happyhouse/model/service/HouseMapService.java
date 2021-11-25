@@ -8,6 +8,7 @@ import com.ssafy.happyhouse.model.BusDto;
 import com.ssafy.happyhouse.model.CoronaInspectorDto;
 import com.ssafy.happyhouse.model.HouseInfoDto;
 import com.ssafy.happyhouse.model.SchoolDto;
+import com.ssafy.happyhouse.model.ShopDto;
 import com.ssafy.happyhouse.model.SidoGugunCodeDto;
 import com.ssafy.happyhouse.model.SubwayDto;
 
@@ -38,4 +39,8 @@ public interface HouseMapService {
 	List<SubwayDto> getdSubway();
 
 	List<SchoolDto> getSchool(Map<String, String> latlng);
+
+	List<ShopDto> getCafe(Map<String, String> latlng);
+
+	List<ShopDto> getBurger(Map<String, String> latlng);
 }

@@ -16,6 +16,7 @@ import com.ssafy.happyhouse.model.BusDto;
 import com.ssafy.happyhouse.model.CoronaInspectorDto;
 import com.ssafy.happyhouse.model.HouseInfoDto;
 import com.ssafy.happyhouse.model.SchoolDto;
+import com.ssafy.happyhouse.model.ShopDto;
 import com.ssafy.happyhouse.model.SidoGugunCodeDto;
 import com.ssafy.happyhouse.model.SubwayDto;
 import com.ssafy.happyhouse.model.service.HouseMapService;
@@ -92,5 +93,15 @@ public class HappyHouseMapController {
 	@GetMapping(value = "/school")
 	public ResponseEntity<List<SchoolDto>> school(@RequestParam Map<String, String> latlng) throws Exception {
 		return new ResponseEntity<List<SchoolDto>>(houseMapService.getSchool(latlng), HttpStatus.OK);
+	}
+
+	@GetMapping(value = "/cafe")
+	public ResponseEntity<List<ShopDto>> cafe(@RequestParam Map<String, String> latlng) throws Exception {
+		return new ResponseEntity<List<ShopDto>>(houseMapService.getCafe(latlng), HttpStatus.OK);
+	}
+
+	@GetMapping(value = "/burger")
+	public ResponseEntity<List<ShopDto>> burger(@RequestParam Map<String, String> latlng) throws Exception {
+		return new ResponseEntity<List<ShopDto>>(houseMapService.getBurger(latlng), HttpStatus.OK);
 	}
 }

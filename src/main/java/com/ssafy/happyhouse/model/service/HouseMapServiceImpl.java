@@ -12,6 +12,7 @@ import com.ssafy.happyhouse.model.BusDto;
 import com.ssafy.happyhouse.model.CoronaInspectorDto;
 import com.ssafy.happyhouse.model.HouseInfoDto;
 import com.ssafy.happyhouse.model.SchoolDto;
+import com.ssafy.happyhouse.model.ShopDto;
 import com.ssafy.happyhouse.model.SidoGugunCodeDto;
 import com.ssafy.happyhouse.model.SubwayDto;
 import com.ssafy.happyhouse.model.mapper.HouseMapMapper;
@@ -85,6 +86,16 @@ public class HouseMapServiceImpl implements HouseMapService {
 	@Override
 	public List<SchoolDto> getSchool(Map<String, String> latlng) {
 		return sqlSession.getMapper(HouseMapMapper.class).getSchool(latlng);
+	}
+
+	@Override
+	public List<ShopDto> getCafe(Map<String, String> latlng) {
+		return sqlSession.getMapper(HouseMapMapper.class).getCafe(latlng);
+	}
+
+	@Override
+	public List<ShopDto> getBurger(Map<String, String> latlng) {
+		return sqlSession.getMapper(HouseMapMapper.class).getBurger(latlng);
 	}
 
 }

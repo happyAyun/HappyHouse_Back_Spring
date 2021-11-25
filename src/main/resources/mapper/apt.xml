@@ -131,6 +131,31 @@
         )DATA
 		<![CDATA[where DATA.distance <= 3000]]>
 		order by DATA.distance;
+	</select>
 	
+	<select id="getBurger" parameterType="Map" resultType="shopDto">
+		select * from (
+		select shopName, branchName, lat, lng,
+		( 6371 * acos( cos( radians( #{lat} ) )
+		 * cos( radians( lat) ) * cos( radians( lng ) - radians(#{lng}) )
+		 + sin( radians(#{lat}) )
+		 * sin( radians(lat) ) ) ) AS distance
+		from shop
+		where division = 'burger'
+		) DATA
+		<![CDATA[where DATA.distance < 0.7]]>	
+	</select>
+	
+	<select id="getCafe" parameterType="Map" resultType="shopDto">
+		select * from (
+		select shopName, branchName, lat, lng,
+		( 6371 * acos( cos( radians( #{lat} ) )
+		 * cos( radians( lat) ) * cos( radians( lng ) - radians(#{lng}) )
+		 + sin( radians(#{lat}) )
+		 * sin( radians(lat) ) ) ) AS distance
+		from shop
+		where division = 'cafe'
+		) DATA
+		<![CDATA[where DATA.distance < 0.7]]>	
 	</select>
 </mapper>
